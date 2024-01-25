@@ -1,7 +1,12 @@
+import ImageGalleryItem from 'components/ImageGalleryItem';
+import { Gallery } from './ImageGallery.styled';
+
 const ImageGallery = () => {
   return (
     <div>
-      <ul></ul>
+      <Gallery>
+        <ImageGalleryItem />
+      </Gallery>
     </div>
   );
 };
