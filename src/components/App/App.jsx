@@ -71,7 +71,7 @@ class App extends Component {
             ariaLabel="three-dots-loading"
           />
         )}
-        <Button onClick={this.handleLoadMore} />
+        {images.length > 0 && <Button onClick={this.handleLoadMore} />}
       </Container>
     );
   }
