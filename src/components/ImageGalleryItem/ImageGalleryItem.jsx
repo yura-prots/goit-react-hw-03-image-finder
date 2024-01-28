@@ -1,13 +1,16 @@
+import { Component } from 'react';
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({
-  imageSource: { webformatURL, largeImageURL, tags },
-}) => {
-  return (
-    <GalleryItem>
-      <GalleryImage src={webformatURL} alt={tags} />
-    </GalleryItem>
-  );
-};
+class ImageGalleryItem extends Component {
+  render() {
+    const { webformatURL, tags } = this.props.imageSource;
+
+    return (
+      <GalleryItem>
+        <GalleryImage src={webformatURL} alt={tags} />
+      </GalleryItem>
+    );
+  }
+}
 
 export default ImageGalleryItem;
