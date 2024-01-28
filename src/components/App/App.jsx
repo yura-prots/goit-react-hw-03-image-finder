@@ -25,11 +25,12 @@ class App extends Component {
       try {
         this.setState({ isLoading: true });
 
-        const searchQuery = this.state.query.split('/')[0];
+        const searchQuery = this.state.query.split('/')[1];
+        const response = await fetchImages(searchQuery, this.state.page);
 
-        const images = await fetchImages(searchQuery);
-        console.log(images);
-        // this.setState();
+        this.setState(prevState => ({
+          images: [...prevState.images, ...response.hits],
+        }));
       } catch (error) {
         console.log(error);
       } finally {
@@ -40,7 +41,7 @@ class App extends Component {
 
   handleSubmit = newQuery => {
     this.setState({
-      query: `${newQuery}/${Date.now()}`,
+      query: `${Date.now()}/${newQuery}`,
       page: 1,
       images: [],
     });
