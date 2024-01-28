@@ -11,30 +11,56 @@ import { Container } from './App.styled';
 
 class App extends Component {
   state = {
+    query: '',
+    page: 1,
     images: [],
     isLoading: false,
   };
 
-  async componentDidMount() {
-    try {
-      this.setState({ isLoading: true });
+  async componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
+      try {
+        this.setState({ isLoading: true });
 
-      const initialImages = await fetchImages();
-      console.log(initialImages);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      this.setState({ isLoading: false });
+        const searchQuery = this.state.query.split('/')[0];
+
+        const images = await fetchImages(searchQuery);
+        console.log(images);
+        // this.setState();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.setState({ isLoading: false });
+      }
     }
   }
 
+  handleSubmit = newQuery => {
+    this.setState({
+      query: `${newQuery}/${Date.now()}`,
+      page: 1,
+      images: [],
+    });
+  };
+
+  handleLoadMore = () => {
+    this.setState(prevState => {
+      return {
+        page: prevState.page + 1,
+      };
+    });
+  };
+
   render() {
-    const { isLoading } = this.state;
+    const { images, isLoading } = this.state;
 
     return (
       <Container>
-        <Searchbar />
-        <ImageGallery />
+        <Searchbar onSubmit={this.handleSubmit} />
+        {images.length > 0 && <ImageGallery />}
         {isLoading && (
           <ThreeDots
             visible={true}
@@ -45,7 +71,7 @@ class App extends Component {
             ariaLabel="three-dots-loading"
           />
         )}
-        <Button />
+        <Button onClick={this.handleLoadMore} />
       </Container>
     );
   }

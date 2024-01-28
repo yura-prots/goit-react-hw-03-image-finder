@@ -6,24 +6,31 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-const Searchbar = () => {
+const Searchbar = ({ onSubmit }) => {
   return (
-    <div>
-      <Header>
-        <SearchForm>
-          <SearchFormBtn type="submit">
-            <SearchFormBtnLbl>Search</SearchFormBtnLbl>
-          </SearchFormBtn>
+    <Header>
+      <SearchForm
+        onSubmit={e => {
+          e.preventDefault();
+          const newQuery = e.target.elements.query.value.trim().toLowerCase();
+          e.target.reset();
 
-          <SearchFormInput
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </Header>
-    </div>
+          return onSubmit(newQuery);
+        }}
+      >
+        <SearchFormBtn type="submit">
+          <SearchFormBtnLbl>Search</SearchFormBtnLbl>
+        </SearchFormBtn>
+
+        <SearchFormInput
+          name="query"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </Header>
   );
 };
 
