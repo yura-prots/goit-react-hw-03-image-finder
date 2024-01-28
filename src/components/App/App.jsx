@@ -18,15 +18,14 @@ class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.query !== this.state.query ||
-      prevState.page !== this.state.page
-    ) {
+    const { query, page } = this.state;
+
+    if (prevState.query !== query || prevState.page !== page) {
       try {
         this.setState({ isLoading: true });
 
-        const searchQuery = this.state.query.split('/')[1];
-        const response = await fetchImages(searchQuery, this.state.page);
+        const searchQuery = query.split('/')[1];
+        const response = await fetchImages(searchQuery, page);
 
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
@@ -61,7 +60,7 @@ class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
-        {images.length > 0 && <ImageGallery />}
+        {images.length > 0 && <ImageGallery images={images} />}
         {isLoading && (
           <ThreeDots
             visible={true}
