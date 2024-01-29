@@ -1,20 +1,7 @@
 import { Component } from 'react';
-import Modal from 'react-modal';
 
+import ModalWindow from 'components/ModalWindow';
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
-
-Modal.setAppElement('#root');
 
 class ImageGalleryItem extends Component {
   state = {
@@ -35,21 +22,17 @@ class ImageGalleryItem extends Component {
 
   render() {
     const { isModalOpen } = this.state;
-    const { webformatURL, tags } = this.props.imageSource;
+    const { webformatURL, tags, largeImageURL } = this.props.imageSource;
 
     return (
-      <GalleryItem onClick={this.openModal}>
-        <GalleryImage src={webformatURL} alt={tags} />
-        <Modal
+      <GalleryItem>
+        <GalleryImage src={webformatURL} alt={tags} onClick={this.openModal} />
+        <ModalWindow
           isOpen={isModalOpen}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Gallery Image Modal"
-        >
-          <button type="button" onClick={this.closeModal}>
-            close
-          </button>
-        </Modal>
+          onClose={this.closeModal}
+          largeImage={largeImageURL}
+          tags={tags}
+        />
       </GalleryItem>
     );
   }
