@@ -14,19 +14,20 @@ class App extends Component {
   state = {
     query: '',
     page: 1,
+    perPage: 12,
     images: [],
     isLoading: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { query, page } = this.state;
+    const { query, page, perPage } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       try {
         this.setState({ isLoading: true });
 
         const searchQuery = query.split('/')[1];
-        const response = await fetchImages(searchQuery, page);
+        const response = await fetchImages(searchQuery, page, perPage);
 
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
