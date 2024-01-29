@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { MoreBtn } from './Button.styled';
 
 const Button = ({ onClick }) => {

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   Header,
   SearchForm,
@@ -13,13 +14,17 @@ const Searchbar = ({ onSubmit }) => {
         onSubmit={e => {
           e.preventDefault();
           const newQuery = e.target.elements.query.value.trim().toLowerCase();
-          e.target.reset();
 
+          if (newQuery === '') {
+            return toast.warn('Give me some query to search');
+          }
+
+          e.target.reset();
           return onSubmit(newQuery);
         }}
       >
         <SearchFormBtn type="submit">
-          <SearchFormBtnLbl>Search</SearchFormBtnLbl>
+          <SearchFormBtnLbl />
         </SearchFormBtn>
 
         <SearchFormInput

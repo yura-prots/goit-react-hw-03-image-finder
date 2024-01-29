@@ -8,7 +8,7 @@ import Searchbar from 'components/Searchbar';
 import ImageGallery from 'components/ImageGallery';
 import Button from 'components/Button';
 
-import { Container } from './App.styled';
+import { Container, Loader } from './App.styled';
 
 class App extends Component {
   state = {
@@ -31,7 +31,10 @@ class App extends Component {
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
         }));
-        toast.success(`Wee found ${response.total} images`);
+
+        if (page === 1) {
+          toast.success(`Wee found ${response.total} images`);
+        }
       } catch (error) {
         return toast.error(error.message);
       } finally {
@@ -64,14 +67,16 @@ class App extends Component {
         <Searchbar onSubmit={this.handleSubmit} />
         {images.length > 0 && <ImageGallery images={images} />}
         {isLoading && (
-          <ThreeDots
-            visible={true}
-            height="80"
-            width="80"
-            color="#3f51b5"
-            radius="9"
-            ariaLabel="three-dots-loading"
-          />
+          <Loader>
+            <ThreeDots
+              visible={true}
+              height="80"
+              width="80"
+              color="#3f51b5"
+              radius="9"
+              ariaLabel="three-dots-loading"
+            />
+          </Loader>
         )}
         {images.length > 0 && <Button onClick={this.handleLoadMore} />}
       </Container>
