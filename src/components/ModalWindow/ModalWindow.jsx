@@ -1,4 +1,5 @@
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
 
 const customStyles = {
   content: {
@@ -32,6 +33,13 @@ const ModalWindow = ({ isOpen, onClose, largeImage, tags }) => {
       <img src={largeImage} alt={tags} />
     </Modal>
   );
+};
+
+ModalWindow.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  largeImage: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
 };
 
 export default ModalWindow;
