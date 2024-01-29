@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components';
 
 import App from 'components/App';
 import GlobalStyle from './styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = {
   colors: {
@@ -19,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <App />
+      <ToastContainer />
     </ThemeProvider>
   </React.StrictMode>
 );

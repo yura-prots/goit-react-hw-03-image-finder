@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import { toast } from 'react-toastify';
 
 import fetchImages from 'api/PixabayAPI';
 
@@ -30,8 +31,9 @@ class App extends Component {
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
         }));
+        toast.success(`Wee found ${response.total} images`);
       } catch (error) {
-        console.log(error);
+        return toast.error(error.message);
       } finally {
         this.setState({ isLoading: false });
       }
