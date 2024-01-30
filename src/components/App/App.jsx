@@ -35,7 +35,7 @@ class App extends Component {
         }));
 
         if (page === 1) {
-          toast.success(`Wee found ${response.total} images`);
+          toast.info(`Wee found ${response.total} images`);
         }
 
         this.setState({
@@ -88,7 +88,7 @@ class App extends Component {
             />
           </Loader>
         )}
-        {images.length > 0 && page !== lastPage && (
+        {images.length > 0 && page !== lastPage && !isLoading && (
           <Button onClick={this.handleLoadMore} />
         )}
       </Container>
