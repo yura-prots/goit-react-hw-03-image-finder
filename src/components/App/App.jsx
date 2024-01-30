@@ -15,12 +15,13 @@ class App extends Component {
     query: '',
     page: 1,
     perPage: 12,
+    lastPage: null,
     images: [],
     isLoading: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { query, page, perPage } = this.state;
+    const { query, page, perPage, lastPage } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       try {
@@ -35,6 +36,14 @@ class App extends Component {
 
         if (page === 1) {
           toast.success(`Wee found ${response.total} images`);
+        }
+
+        this.setState({
+          lastPage: Math.ceil(response.total / perPage),
+        });
+
+        if (page === lastPage) {
+          toast.info('You have reached the end of the gallery');
         }
       } catch (error) {
         return toast.error(error.message);
@@ -61,7 +70,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, page, lastPage } = this.state;
 
     return (
       <Container>
@@ -79,7 +88,9 @@ class App extends Component {
             />
           </Loader>
         )}
-        {images.length > 0 && <Button onClick={this.handleLoadMore} />}
+        {images.length > 0 && page !== lastPage && (
+          <Button onClick={this.handleLoadMore} />
+        )}
       </Container>
     );
   }

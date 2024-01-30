@@ -21,7 +21,6 @@ const Searchbar = ({ onSubmit }) => {
             return toast.warn('Give me some query to search');
           }
 
-          e.target.reset();
           return onSubmit(newQuery);
         }}
       >
